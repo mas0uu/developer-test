@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>136X Gold Miner | Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --red: #e53e3e;
+      --black: #000;
+      --dark: #0a0a0a;
+      --navy: #0d1f3c;
+      --light: #f5f5f0;
+      --card: #fff;
+      --line: #222;
+      --body: #444;
+      --muted: #777;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--dark);
+      color: #fff;
+      font-family: "DM Sans", sans-serif;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .top-bar {
+      background: var(--gold);
+      color: var(--black);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .navbar {
+      background: var(--black);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-family: "Syne", sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .days {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .day-link {
+      position: relative;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: #888;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .day-link.active {
+      color: #fff;
+      border-color: var(--gold);
+    }
+
+    .live-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--red);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+    }
+
+    .hero-home {
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='rgba(201,168,76,0.04)' stroke-width='1'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at top, var(--navy) 0%, var(--black) 70%);
+      padding: 80px 60px 60px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .sub-eyebrow {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .hero-home h1 {
+      font-family: "Syne", sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .quote {
+      display: block;
+      color: var(--gold);
+      font-style: italic;
+      font-size: 62px;
+    }
+
+    .hero-copy {
+      color: rgba(255, 255, 255, 0.64);
+      max-width: 520px;
+      margin: 0 auto 28px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 600px;
+      margin: 32px auto;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .stat {
+      padding: 16px;
+      border-right: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .val {
+      font-family: "Syne", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .lbl {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .countdown-wrap {
+      margin: 24px 0;
+    }
+
+    .countdown-lbl {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cd-unit {
+      background: #0d0d0d;
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 14px 18px;
+      min-width: 70px;
+      text-align: center;
+    }
+
+    .cd-num {
+      font-family: "Syne", sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .cd-sep {
+      font-family: "Syne", sans-serif;
+      font-size: 28px;
+      color: var(--gold);
+      line-height: 1;
+      padding-top: 14px;
+    }
+
+    .cd-lbl {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .btn-gold,
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-size: 14px;
+      border-radius: 3px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--black);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #444;
+    }
+
+    .briefing {
+      background: var(--light);
+      padding: 60px 40px;
+    }
+
+    .briefing h2 {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #333;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .briefing h2::before,
+    .briefing h2::after {
+      content: "--";
+      color: var(--gold);
+    }
+
+    .day-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .day-card {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 2px;
+      border-top: 3px solid transparent;
+    }
+
+    .day-card.active-card {
+      background: #1a1400;
+      border-top-color: var(--gold);
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .funding-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .date {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .day-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .active-card h3 {
+      color: #fff;
+    }
+
+    .read-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .footer-home {
+      background: var(--black);
+      padding: 32px;
+      text-align: center;
+      font-size: 11px;
+      color: #444;
+      border-top: 1px solid #111;
+      line-height: 1.8;
+    }
+
+    .brand-foot {
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .day-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar,
+      .hero-home,
+      .briefing {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-home {
+        padding-top: 56px;
+      }
+
+      .hero-home h1 {
+        font-size: 38px;
+      }
+
+      .quote {
+        font-size: 44px;
+      }
+
+      .stats-row,
+      .day-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat:last-child {
+        border-bottom: none;
+      }
+
+      .countdown {
+        gap: 10px;
+      }
+
+      .cd-sep {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">GET IN BEFORE JUNE 1ST, 2026 - PRE-IPO SHARES ARE FILLING FAST</div>
+
+  <nav class="navbar">
+    <a class="brand" href="index.html">136X Gold Miner</a>
+    <div class="days">
+      <a class="day-link active" href="day1.html">Day 1</a>
+      <a class="day-link" href="day2.html">Day 2</a>
+      <a class="day-link" href="day3.html">Day 3</a>
+      <a class="day-link" href="day4.html">Day 4 <span class="live-badge">LIVE</span></a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero-home">
+      <div class="eyebrow">Exclusive Research Event - 4-Day Series</div>
+      <div class="sub-eyebrow">A Kiyosaki Research Event</div>
+      <h1>CLAIM PRE-IPO SHARES<br />OF THIS TINY<br /><span class="quote">"136X Gold Miner"</span></h1>
+      <p class="hero-copy">A tiny company has discovered how to extract gold from the waste stream of the AI revolution - at 136 times the yield of traditional mining.</p>
+
+      <div class="stats-row">
+        <div class="stat"><div class="val">$4,777</div><div class="lbl">Gold Spot Price</div></div>
+        <div class="stat"><div class="val">136X</div><div class="lbl">Yield vs. Traditional</div></div>
+        <div class="stat"><div class="val">Pre-IPO</div><div class="lbl">Before Public</div></div>
+        <div class="stat"><div class="val">Jun 1</div><div class="lbl">Deadline</div></div>
+      </div>
+
+      <div class="countdown-wrap">
+        <div class="countdown-lbl">Presentation Goes Live</div>
+        <div class="countdown">
+          <div class="cd-unit"><div class="cd-num" id="days">00</div><div class="cd-lbl">Days</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-num" id="hours">00</div><div class="cd-lbl">Hrs</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-num" id="mins">00</div><div class="cd-lbl">Min</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-num" id="secs">00</div><div class="cd-lbl">Sec</div></div>
+        </div>
+      </div>
+
+      <div class="cta-group">
+        <a class="btn-gold" href="day4.html">Start With Day 4 -&gt;</a>
+        <a class="btn-outline" href="day1.html">Begin From Day 1</a>
+      </div>
+    </section>
+
+    <section class="briefing">
+      <h2>Your 4-Day Briefing</h2>
+      <div class="day-cards">
+        <article class="day-card">
+          <div class="tag">Day 1</div>
+          <div class="date">April 15, 2026</div>
+          <h3>The Greatest Gold Bull Market of Our Lifetime Is Just Getting Started</h3>
+          <a class="read-link" href="day1.html">Read Now -&gt;</a>
+        </article>
+        <article class="day-card">
+          <div class="tag">Day 2</div>
+          <div class="date">April 16, 2026</div>
+          <h3>136X - The Number That Makes Every Traditional Gold Miner Obsolete</h3>
+          <a class="read-link" href="day2.html">Read Now -&gt;</a>
+        </article>
+        <article class="day-card">
+          <div class="tag">Day 3</div>
+          <div class="date">April 17, 2026</div>
+          <h3>Why I'm Putting My Name Behind This</h3>
+          <a class="read-link" href="day3.html">Read Now -&gt;</a>
+        </article>
+        <article class="day-card active-card">
+          <div class="funding-badge">Funding Open</div>
+          <div class="tag">Day 4</div>
+          <div class="date">April 18, 2026</div>
+          <h3>The Door Is Open - Full Reveal &amp; Pre-IPO Access</h3>
+          <a class="read-link" href="day4.html">Watch &amp; Invest -&gt;</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-home">
+    <div class="brand-foot">136X Gold Miner - A Kiyosaki Research Event</div>
+    <p>A publication of Kiyosaki Research. The information provided is for educational purposes only and should not be construed as investment advice.<br />All investments are speculative and illiquid. Consult a qualified financial advisor before making any investment decisions.</p>
+    <p style="margin-top:12px">&copy; 2026 Kiyosaki Research. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function updateCountdown() {
+      const target = new Date("2026-06-01T00:00:00");
+      const now = new Date();
+      const diff = Math.max(target - now, 0);
+
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("mins").textContent = String(mins).padStart(2, "0");
+      document.getElementById("secs").textContent = String(secs).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>

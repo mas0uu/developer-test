@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>136X Gold Miner | Day 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --red: #e53e3e;
+      --black: #000;
+      --dark: #0a0a0a;
+      --navy: #0d1f3c;
+      --white: #fff;
+      --line: #222;
+      --copy: #444;
+      --muted: #888;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--black);
+      color: #fff;
+      font-family: "DM Sans", sans-serif;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .navbar {
+      background: var(--black);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-family: "Syne", sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .days {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .day-link {
+      position: relative;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: #888;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .day-link.active {
+      color: #fff;
+      border-color: var(--gold);
+    }
+
+    .live-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--red);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+    }
+
+    .day-hero {
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='rgba(201,168,76,0.04)' stroke-width='1'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at top, var(--navy) 0%, var(--black) 70%);
+      padding: 48px 60px 40px;
+      text-align: center;
+    }
+
+    .day-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .day-hero h1 {
+      font-family: "Syne", sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.1;
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 500px;
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .stat {
+      padding: 16px;
+      border-right: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .val {
+      font-family: "Syne", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .lbl {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .video-shell {
+      background: var(--dark);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .video-frame {
+      width: min(100%, 960px);
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-frame iframe,
+    .video-frame div {
+      width: 100%;
+      height: 100%;
+    }
+
+    .reveal-wrap {
+      background: var(--black);
+      padding: 24px 60px;
+    }
+
+    .reveal-box {
+      display: none;
+      max-width: 960px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.12), rgba(201, 168, 76, 0.05));
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      border-radius: 4px;
+      padding: 28px 36px;
+      text-align: center;
+    }
+
+    .reveal-box.visible {
+      display: block;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .reveal-box h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 18px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .reveal-box p {
+      font-size: 14px;
+      color: #bbb;
+      line-height: 1.7;
+    }
+
+    .day-body {
+      background: var(--white);
+      color: #111;
+      padding: 60px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .by-line {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--gold);
+      display: inline-block;
+      padding: 4px 10px;
+      margin-bottom: 24px;
+    }
+
+    .day-body h2 {
+      font-family: "Syne", sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    .day-body p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--copy);
+      margin-bottom: 16px;
+    }
+
+    .section-head {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin: 36px 0 12px;
+    }
+
+    .pull-quote {
+      background: #1a1400;
+      border-left: 4px solid var(--gold);
+      padding: 20px 24px;
+      margin: 32px 0;
+    }
+
+    .pull-quote .big {
+      font-family: "Syne", sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .pull-quote .remember {
+      color: var(--gold);
+      font-weight: 700;
+      margin: 8px 0 4px;
+    }
+
+    .pull-quote .detail {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .signoff {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .day-nav {
+      background: var(--black);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .day-nav a {
+      color: #888;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .day-nav span {
+      color: var(--gold);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar,
+      .day-hero,
+      .reveal-wrap,
+      .day-body,
+      .day-nav {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .navbar,
+      .day-nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .day-hero h1 {
+        font-size: 34px;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat:last-child {
+        border-bottom: none;
+      }
+
+      .day-body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="brand" href="index.html">136X Gold Miner</a>
+    <div class="days">
+      <a class="day-link active" href="day1.html">Day 1</a>
+      <a class="day-link" href="day2.html">Day 2</a>
+      <a class="day-link" href="day3.html">Day 3</a>
+      <a class="day-link" href="day4.html">Day 4 <span class="live-badge">LIVE</span></a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="day-hero">
+      <div class="day-label">Day 1 of 4 - April 15, 2026</div>
+      <h1>THE <span class="gold">GREATEST</span><br />GOLD BULL MARKET<br />OF OUR LIFETIME IS<br />JUST GETTING STARTED</h1>
+      <div class="stats-row">
+        <div class="stat"><div class="val">$4,777</div><div class="lbl">Gold Spot Price</div></div>
+        <div class="stat"><div class="val">1,000+</div><div class="lbl">Metric Tons Bought</div></div>
+        <div class="stat"><div class="val">136</div><div class="lbl">The Number That Changes Everything</div></div>
+      </div>
+    </section>
+
+    <section class="video-shell">
+      <div class="video-frame">
+        <div id="player"></div>
+      </div>
+    </section>
+
+    <section class="reveal-wrap">
+      <div class="reveal-box" id="reveal-box">
+        <h3>You've unlocked Day 2</h3>
+        <p>Thanks for watching. <strong>Day 2</strong> is now available - discover the number that makes every traditional gold miner obsolete.</p>
+      </div>
+    </section>
+
+    <article class="day-body">
+      <span class="by-line">By Robert Kiyosaki - Chapter 1 of 4</span>
+      <h2>WHY I BELIEVE GOLD IS HEADED TO PRICES MOST PEOPLE THINK ARE IMPOSSIBLE</h2>
+      <p>I've been called crazy for my gold predictions before. In 2002 I told people gold would hit $1,000 an ounce. It was trading at $300. People laughed.</p>
+
+      <div class="section-head">The Setup</div>
+      <p>Gold went up 65% in 2025. That's not normal. That's a signal. Gold mining stocks did even better - nearly doubling over the same period.</p>
+
+      <div class="section-head">Why Now</div>
+      <p>Central banks purchased more gold in the last three years than at any point since the U.S. left the gold standard in 1971. China. India. Russia. Turkey. Dozens of smaller nations. All adding to reserves at record pace.</p>
+
+      <div class="section-head">What I'm About To Share With You</div>
+      <p>I started the Venture Network because I have more private deals cross my desk than I could possibly manage myself. Tomorrow, I'm going to introduce you to a number.</p>
+
+      <div class="pull-quote">
+        <div class="big">136</div>
+        <p class="remember">REMEMBER IT.</p>
+        <p class="detail">Because when I explain what it means - you're going to understand why I'm putting my name behind this opportunity with full conviction.</p>
+      </div>
+
+      <p class="signoff">See you tomorrow. - Robert Kiyosaki</p>
+    </article>
+  </main>
+
+  <nav class="day-nav">
+    <a href="index.html"><span>&lt;-</span> Home</a>
+    <a href="day2.html">Day 2 <span>-&gt;</span></a>
+  </nav>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player;
+    let watchedMs = 0;
+    let playStartedAt = null;
+    let unlockShown = false;
+    let revealTimer = null;
+
+    function maybeShowReveal() {
+      if (!unlockShown && watchedMs >= 10000) {
+        unlockShown = true;
+        document.getElementById("reveal-box").classList.add("visible");
+        window.clearInterval(revealTimer);
+      }
+    }
+
+    function stopWatchingClock() {
+      if (playStartedAt !== null) {
+        watchedMs += Date.now() - playStartedAt;
+        playStartedAt = null;
+      }
+      maybeShowReveal();
+      window.clearInterval(revealTimer);
+    }
+
+    function startWatchingClock() {
+      if (unlockShown || playStartedAt !== null) {
+        return;
+      }
+
+      playStartedAt = Date.now();
+      revealTimer = window.setInterval(function () {
+        const elapsed = watchedMs + (Date.now() - playStartedAt);
+        if (elapsed >= 10000) {
+          watchedMs = elapsed;
+          playStartedAt = null;
+          maybeShowReveal();
+        }
+      }, 200);
+    }
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("player", {
+        videoId: "dQw4w9WgXcQ",
+        playerVars: {
+          rel: 0
+        },
+        events: {
+          onStateChange: onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        startWatchingClock();
+      } else {
+        stopWatchingClock();
+      }
+    }
+  </script>
+</body>
+</html>
