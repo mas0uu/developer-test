@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task List</title>
+</head>
+<body>
+  <h1>Task List</h1>
+
+  <form id="task-form">
+    <input id="task-title" type="text" placeholder="Enter a task title" />
+    <button type="submit">Add Task</button>
+  </form>
+
+  <p id="message"></p>
+  <ul id="task-list"></ul>
+
+  <script>
+    const taskForm = document.getElementById('task-form');
+    const taskTitle = document.getElementById('task-title');
+    const taskList = document.getElementById('task-list');
+    const message = document.getElementById('message');
+
+    async function loadTasks() {
+      const response = await fetch('/tasks');
+      const data = await response.json();
+      renderTasks(data.tasks);
+    }
+
+    function renderTasks(tasks) {
+      taskList.innerHTML = '';
+
+      tasks.forEach((task) => {
+        const item = document.createElement('li');
+        const label = document.createElement('span');
+        const doneButton = document.createElement('button');
+        const deleteButton = document.createElement('button');
+
+        label.textContent = `${task.title} (${task.status}) `;
+
+        doneButton.textContent = 'Mark Done';
+        doneButton.disabled = task.status === 'done';
+        doneButton.addEventListener('click', async () => {
+          await fetch(`/tasks/${task.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'done' }),
+          });
+
+          message.textContent = 'Task marked as done.';
+          loadTasks();
+        });
+
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', async () => {
+          await fetch(`/tasks/${task.id}`, {
+            method: 'DELETE',
+          });
+
+          message.textContent = 'Task deleted.';
+          loadTasks();
+        });
+
+        item.appendChild(label);
+        item.appendChild(doneButton);
+        item.appendChild(deleteButton);
+        taskList.appendChild(item);
+      });
+    }
+
+    taskForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const title = taskTitle.value.trim();
+      if (!title) {
+        message.textContent = 'Title is required.';
+        return;
+      }
+
+      const response = await fetch('/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        message.textContent = data.message || 'Unable to add task.';
+        return;
+      }
+
+      message.textContent = 'Task added.';
+      taskTitle.value = '';
+      loadTasks();
+    });
+
+    loadTasks();
+  </script>
+</body>
+</html>
