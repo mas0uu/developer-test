@@ -11,8 +11,9 @@
       font-family: Arial, sans-serif;
       background: #f4f6f9;
       color: #333;
-      /* Bug: the fixed navbar overlapped the top of the page content; adding top padding offsets the layout so content starts below the navbar. */
+      /* Bug: the fixed navbar overlapped the top of the page content */
       padding-top: 72px;
+      /* Bug fix: added top padding so content starts below the navbar */
     }
 
     .navbar {
@@ -219,7 +220,8 @@
 
   <script>
     function handleCTA() {
-      alert("Welcome to Launchmen! Redirecting to signup...");
+      // Bug fix: changed the CTA so it goes to the sign-up link
+      window.location.href = "#sign-up";
     }
 
     document.addEventListener("DOMContentLoaded", function () {
