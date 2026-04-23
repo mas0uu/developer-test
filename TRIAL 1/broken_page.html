@@ -234,7 +234,8 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       const cards = document.querySelectorAll(".card");
-      cards.froEach(function (card) {
+      // Bug fix: corrected the loop typo so the card hover animation runs
+      cards.forEach(function (card) {
         card.addEventListener("mouseenter", function () {
           card.style.transform = "translateY(-4px)";
           card.style.transition = "transform 0.2s ease";
