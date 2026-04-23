@@ -247,7 +247,8 @@
 
       const statItems = document.querySelectorAll(".stat-item h3");
       statItems.forEach(function (el) {
-        const target = parseFloat(el.textContent);
+        const originalText = el.textContent;
+        const target = parseFloat(originalText);
         if (!isNaN(target)) {
           let current = 0;
           const step = target / 40;
@@ -257,9 +258,10 @@
               current = target;
               clearInterval(timer);
             }
-            el.textContent = Number.isInteger(target)
-              ? Math.round(current)
-              : current.toFixed(0) + "%";
+            // Bug fix: kept the percent sign on stats like 94% so the counter ends with the correct value
+            el.textContent = originalText.includes("%")
+              ? current.toFixed(0) + "%"
+              : Math.round(current);
           }, 30);
         }
       });
